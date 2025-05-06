@@ -1,0 +1,14 @@
+# Angular build files
+.angular/
+node_modules/
+
+# Compiled output
+/Front-end/dist
+/Front-end/.tmp
+/Front-end/out-tsc
+
+# IDE files
+.idea/
+.vscode/
+*.sublime-workspace
+

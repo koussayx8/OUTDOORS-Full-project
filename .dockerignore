@@ -1,0 +1,11 @@
+**/.git
+**/node_modules
+#**/target
+**/.settings
+**/.classpath
+**/.project
+**/.idea
+**/.vscode
+**/logs
+**/build
+**/.angular
