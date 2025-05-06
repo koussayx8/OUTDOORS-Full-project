@@ -1,0 +1,310 @@
+<!-- Start Breadcrumbs -->
+<app-breadcrumbs title="Camping Center List" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="row">
+  <div class="col-xxl-3" id="propertyFilters">
+    <div class="card mb-0">
+      <ngx-simplebar>
+        <div class="card-header d-flex align-items-center">
+          <h4 class="card-title flex-grow-1 mb-0">Filters</h4>
+          <div class="flex-shrink-0">
+            <button class="btn btn-subtle-secondary btn-icon btn-sm" (click)="showFilter()">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <!-- Location Filter -->
+          <div class="mb-3">
+            <p class="text-muted fw-medium text-uppercase mb-3">Location</p>
+            <select class="form-select" id="select-location" (change)="location()">
+              <option value="">Select Location</option>
+              <option value="Ariana">Ariana</option>
+              <option value="Beja">Beja</option>
+              <option value="Ben Arous">Ben Arous</option>
+              <option value="Bizerte">Bizerte</option>
+              <option value="Gabes">Gabes</option>
+              <option value="Gafsa">Gafsa</option>
+              <option value="Jendouba">Jendouba</option>
+              <option value="Kairouan">Kairouan</option>
+              <option value="Kasserine">Kasserine</option>
+              <option value="Kebili">Kebili</option>
+              <option value="Kef">Kef</option>
+              <option value="Mahdia">Mahdia</option>
+              <option value="Manouba">Manouba</option>
+              <option value="Medenine">Medenine</option>
+              <option value="Monastir">Monastir</option>
+              <option value="Nabeul">Nabeul</option>
+              <option value="Sfax">Sfax</option>
+              <option value="Sidi Bouzid">Sidi Bouzid</option>
+              <option value="Siliana">Siliana</option>
+              <option value="Sousse">Sousse</option>
+              <option value="Tataouine">Tataouine</option>
+              <option value="Tozeur">Tozeur</option>
+              <option value="Tunis">Tunis</option>
+              <option value="Zaghouan">Zaghouan</option>
+            </select>
+          </div>
+
+          <!-- Logement Type Filter -->
+          <div class="mb-4">
+            <p class="text-muted fw-medium text-uppercase mb-3">Logement Type</p>
+            <div class="row gy-3" id="logement-type-filter">
+              <div class="col-lg-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" name="checkAllTypes"
+                         (change)="logementTypeFilter($event)" id="allselectLogementType">
+                  <label class="form-check-label" for="allselectLogementType">
+                    Select All
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [value]="typeLogement.CHAMBRE_A_1" name="checkType"
+                         (change)="logementTypeFilter($event)" id="typeChambreA1">
+                  <label class="form-check-label" for="typeChambreA1">
+                    Single Room (1 Person)
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [value]="typeLogement.CHAMBRE_A_2" name="checkType"
+                         (change)="logementTypeFilter($event)" id="typeChambreA2" >
+                  <label class="form-check-label" for="typeChambreA2">
+                    Double Room (2 Persons)
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [value]="typeLogement.CHAMBRE_A_3" name="checkType"
+                         (change)="logementTypeFilter($event)" id="typeChambreA3">
+                  <label class="form-check-label" for="typeChambreA3">
+                    Triple Room (3 Persons)
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [value]="typeLogement.CHAMBRE_A_4" name="checkType"
+                         (change)="logementTypeFilter($event)" id="typeChambreA4">
+                  <label class="form-check-label" for="typeChambreA4">
+                    Family Room (4 Persons)
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [value]="typeLogement.BANGALO_A_5" name="checkType"
+                         (change)="logementTypeFilter($event)" id="typeBangaloA5" >
+                  <label class="form-check-label" for="typeBangaloA5">
+                    Bungalow (5 Persons)
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [value]="typeLogement.BANGALO_A_10" name="checkType"
+                         (change)="logementTypeFilter($event)" id="typeBangaloA10">
+                  <label class="form-check-label" for="typeBangaloA10">
+                    Large Bungalow (10 Persons)
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Price Range Filter -->
+          <div class="mb-4">
+            <p class="text-muted fw-medium text-uppercase mb-3">Price Range</p>
+            <div>
+              <ngx-slider [(ngModel)]="pricevalue" [(highValue)]="maxValue" [options]="options"
+                          id="product-price-range" (valueChange)="valueChange($event, true)"
+                          (highValueChange)="valueChange($event, false)"></ngx-slider>
+              <div class="formCost d-flex gap-2 align-items-center mt-2">
+                <input class="form-control" type="text" id="minCost" [value]="minValue">
+                <span class="fw-semibold text-muted">to</span>
+                <input class="form-control" type="text" id="maxCost" [value]="maxValue">
+              </div>
+            </div>
+          </div>
+
+          <!-- Material Filter -->
+          <div class="mb-4">
+            <p class="text-muted fw-medium text-uppercase mb-3">Material Types</p>
+            <div class="row gy-3" id="material-type-filter">
+              <div class="col-lg-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" name="checkAllMaterialTypes"
+                         (change)="materialTypeFilter($event)" id="allselectMaterialType">
+                  <label class="form-check-label" for="allselectMaterialType">
+                    Select All
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [value]="typeMateriel.MATERIEL_DE_COUCHAGE" name="checkMaterialType"
+                         (change)="materialTypeFilter($event)" id="typeMaterielCouchage">
+                  <label class="form-check-label" for="typeMaterielCouchage">
+                    Sleeping Equipment
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [value]="typeMateriel.MOBILIER_DE_CAMPING" name="checkMaterialType"
+                         (change)="materialTypeFilter($event)" id="typeMobilierCamping">
+                  <label class="form-check-label" for="typeMobilierCamping">
+                    Camping Furniture
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [value]="typeMateriel.CUISINE_ET_ALIMENTATION" name="checkMaterialType"
+                         (change)="materialTypeFilter($event)" id="typeCuisineAlimentation">
+                  <label class="form-check-label" for="typeCuisineAlimentation">
+                    Cooking & Food Equipment
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [value]="typeMateriel.EQUIPEMENT_DE_SECURITE" name="checkMaterialType"
+                         (change)="materialTypeFilter($event)" id="typeEquipementSecurite">
+                  <label class="form-check-label" for="typeEquipementSecurite">
+                    Safety Equipment
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [value]="typeMateriel.EQUIPEMENTS_DE_LOISIRS" name="checkMaterialType"
+                         (change)="materialTypeFilter($event)" id="typeEquipementLoisirs">
+                  <label class="form-check-label" for="typeEquipementLoisirs">
+                    Leisure Equipment
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Reset Filters Button -->
+          <div class="mt-4 pt-2">
+            <button type="button" class="btn btn-primary w-100" (click)="resetFilters()">
+              Reset Filters
+            </button>
+          </div>
+        </div>
+      </ngx-simplebar>    </div>
+  </div>
+  <div class="col-lg">
+    <div class="card">
+      <div class="card-body">
+        <div class="row align-items-center gy-3">
+          <div class="col-3">
+            <h6 class="card-title mb-0">Camping Center <span class="badge bg-secondary-subtle text-secondary align-baseline ms-1">{{centrelist.length}}</span></h6>
+          </div><!--end col-->
+          <div class="col-auto ms-auto">
+            <button class="btn btn-primary myButton" (click)="showFilter()"><i class="bi bi-funnel align-baseline me-1"></i> Filter</button>
+          </div><!--end col-->
+        </div><!--end row-->
+      </div>
+    </div>
+
+    <div class="row" id="property-list">
+      @if (filteredCentres.length === 0) {
+        <div id="noresult1">
+          <div class="text-center py-4">
+            <div class="avatar-md mx-auto mb-4">
+              <div class="avatar-title bg-light text-primary rounded-circle fs-4xl">
+                <i class="bi bi-search"></i>
+              </div>
+            </div>
+            <h5 class="mt-2">Sorry! No Result Found</h5>
+            <p class="text-muted">Try adjusting your filters</p>
+            <button class="btn btn-primary" (click)="resetFilters()">Reset Filters</button>
+          </div>
+        </div>
+      }
+      @else {
+        @for (data of displayCentres; track $index) {
+        <div class="col-xxl-3 col-lg-4 col-md-6">
+          <div class="card real-estate-grid-widgets card-animate">
+            <div class="card-body p-2">
+              <img src="{{data.image}}" alt="" class="rounded w-100 object-fit-cover" style="height: 180px">
+              <button type="button" class="btn btn-subtle-warning custom-toggle btn-icon btn-sm">
+                <span class="icon-on"><i class="bi bi-star"></i></span> <span class="icon-off"><i class="bi bi-star-fill"></i></span>
+              </button>
+            </div>
+            <div class="card-body p-3">
+
+              <span *ngIf="data.verified" class="badge bg-success-subtle text-success mb-3">
+  <i class="bi bi-house-door align-baseline me-1"></i>
+  Verified
+</span>
+              <span *ngIf="!data.verified" class="badge bg-warning-subtle text-warning mb-3">
+  <i class="bi bi-house-door align-baseline me-1"></i>
+  Not Verified
+</span>
+              <a routerLink="/real-estate/property-overview">
+                <h6 class="fs-lg text-capitalize text-truncate">{{ data.name }}</h6>
+              </a>
+              <p class="text-muted small mb-1"
+                 style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                <i class="bi bi-geo-alt align-baseline me-1"></i> {{data.address}}
+              </p>
+              <ul class="d-flex align-items-center gap-2 flex-wrap list-unstyled">
+                <li>
+                  <p class="text-muted mb-0"><i class="bi bi-house align-baseline text-primary me-1"></i>
+                    {{data.materiels?.length}} Materiel</p>
+                </li>
+                <li>
+                  <p class="text-muted mb-0"><i class="ph ph-bathtub align-middle text-primary me-1"></i>
+                    {{data.logements?.length}} Bedroom</p>
+                </li>
+                <li>
+                  <p class="text-muted mb-0"><i class="bi bi-telephone align-baseline text-primary me-1"></i> {{data.numTel}}
+                  </p>
+                </li>
+              </ul>
+                <div class="border-top border-dashed mt-3 pt-3 d-flex align-items-center justify-content-between gap-3">
+                <h5 class="mb-0">TND {{data.prixJr}}</h5>
+                <a  [routerLink]="['detail', data.idCentre]" class="link-effect">Check Center<i class="bi bi-chevron-right align-baseline ms-1"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+      }
+    </div>
+    <!--end row-->
+
+    <div id="elmLoader">
+      <div class="spinner-border text-primary avatar-sm" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <div class="row align-items-center mb-4 justify-content-between text-center text-sm-start"
+         id="pagination-element-1" [class.d-none]="filteredCentres.length === 0">
+      <div class="col-sm">
+        <div class="text-muted">
+          Showing <span class="fw-semibold">{{displayCentres.length}}</span> of
+          <span class="fw-semibold">{{filteredCentres.length}}</span> Results
+        </div>
+      </div>
+      <div class="col-sm-auto mt-3 mt-sm-0" id="pagination-element-2">
+        <pagination class="pagination-block pagination pagination-separated justify-content-center justify-content-sm-end mb-sm-0"
+                    [totalItems]="filteredCentres.length"
+                    [itemsPerPage]="itemsPerPage"
+                    (pageChanged)="pageChanged($event)">
+        </pagination>
+      </div>
+    </div>
+  </div>
+</div>
+
